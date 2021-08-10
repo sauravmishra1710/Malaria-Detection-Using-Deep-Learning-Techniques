@@ -23,13 +23,13 @@ from IPython.display import Markdown
 
 class ModelBuilder():
     
-    '''
-    The Model Builder class to design the different models
-    to be experimented for the study.
-    
-    '''
-    
     def __init__(self):
+        
+        '''
+        The Model Builder class to design the different models
+        to be experimented for the study.
+
+        '''
         pass
     
     def Custom_Model_With_Avg_Pooling(self, INPUT_SHAPE=(135, 135, 3), activation_mode='relu'):

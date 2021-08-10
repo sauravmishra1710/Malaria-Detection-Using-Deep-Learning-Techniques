@@ -15,25 +15,26 @@ import math
 
 class ValidateModel():
     
-    '''
-    The Model Validator class to validate and compute the various classification metrics and scores for
-    the models. The module returns a consolidated classification report with the following metric scores.
-
-        1. Confusion Matrix
-        2. Classification Report
-        3. F1 Score
-        4. Accuracy
-        5. Mathews Correlation Coefficient (MCC)
-        6. Precision
-        7. Recall
-        8. AUROC Score - Area Under the Receiver Operating Characteristic Curve
-        9. AUC-PR Score - Area Under the Precision Recall Curve.
-        10. Plot for AUROC Curve - Area Under the Receiver Operating Characteristic Curve
-        11. Plot for AUC-PR Curve - Area Under the Precision Recall Curve.
-    
-    '''
-    
     def __init__(self):
+        
+        '''
+        The Model Validator class to validate and compute the various classification metrics and scores for
+        the models. The module returns a consolidated classification report with the following metric scores.
+
+            1. Confusion Matrix
+            2. Classification Report
+            3. F1 Score
+            4. Accuracy
+            5. Mathews Correlation Coefficient (MCC)
+            6. Precision
+            7. Recall
+            8. AUROC Score - Area Under the Receiver Operating Characteristic Curve
+            9. AUC-PR Score - Area Under the Precision Recall Curve.
+            10. Plot for AUROC Curve - Area Under the Receiver Operating Characteristic Curve
+            11. Plot for AUC-PR Curve - Area Under the Precision Recall Curve.
+
+        '''
+        
         pass
     
     

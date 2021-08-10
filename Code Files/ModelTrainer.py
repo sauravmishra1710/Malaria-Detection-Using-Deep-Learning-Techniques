@@ -34,26 +34,29 @@ import time
 
 class MalariaNet():
     
-    '''
-    A Trainer class which packages methods to train the model and the helper functions and attributes 
-    that are necessary for model fit. 
-    
-    '''
-    
     def __init__(self):
+        
+        '''
+        A Trainer class which packages methods to train the model and the helper functions and attributes 
+        that are necessary for model fit. 
+
+        '''
         pass
     
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-    Purpose: 
-        A static method to display markdown formatted output like bold, italic bold etc..
-    
-    Parameters:
-        1. textToDisplay - the string message with formatting styles that is to be displayed
-    
-    Return Value: 
-        NONE
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
     def PrintMarkdownText(self, textToDisplay):
+        
+        '''
+        Purpose: 
+            A static method to display markdown formatted output like bold, italic bold etc..
+
+        Parameters:
+            1. textToDisplay - the string message with formatting styles that is to be displayed
+
+        Return Value: 
+            NONE
+        '''
+        
         display(Markdown('<br>'))
         display(Markdown(textToDisplay))
     
