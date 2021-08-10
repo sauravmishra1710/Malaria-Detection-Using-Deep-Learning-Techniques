@@ -27,7 +27,10 @@ class SnapshotEnsemble(Callback):
         
         '''
         Purpose:
-            Initialize the Snapshot Ensembling Framework
+            Initialize the Snapshot Ensembling Framework.
+            The Snapshot Ensemble module to implement the snapshot callback
+            and record the model snapshot (save the model weights) during the model training phase
+            as the model visits different local minima points.
 
         Parameters:
             1. folder_path: Directory where the snapshots would be saved.
@@ -75,7 +78,7 @@ class SnapshotEnsemble(Callback):
 
         cycle = int(epoch / self.period)
         cycle_str = str(cycle+1)
-        self.model.save(self.path_format.format(cycle_str), overwrite=True)
+        self.model.save(self.path_format.format(cycle_str), overwrite = True)
 
         # Update the learning rate
         K.set_value(self.model.optimizer.lr, self.base_lr)
@@ -137,7 +140,16 @@ class SnapshotEnsemble(Callback):
 
     def cosine_annealing(self, epoch):
         
-        # calculate learning rate for epoch
+        '''
+        Purpose:
+            Calculate learning rate for epoch.
+
+        Parameters:
+            1. epoch: The current epoch number in the training cycle.
+
+        Returns:
+            lr - updated learning rate.
+        '''
         
         lr = math.pi * (epoch % self.period) / self.period
         lr = self.base_lr / 2 * (math.cos(lr) + 1)
@@ -145,6 +157,18 @@ class SnapshotEnsemble(Callback):
     
     @staticmethod
     def Custom_Model_With_Avg_Pooling(input_tensor, INPUT_SHAPE=(135, 135, 3), activation_mode='relu'):
+        
+        '''
+        Purpose:
+            Construct a custom model to implement snapshot ensemble.
+
+        Parameters:
+            1. input_tensor: tensor for the model input.
+            2. activation_mode: the model activation. Default is 'relu'.
+
+        Returns:
+            model - the model instance.
+        '''
         
         x = Conv2D(8, kernel_size=(1, 1), activation='relu', padding='same')(input_tensor)
         x = AveragePooling2D(pool_size=(2, 2))(x)
@@ -179,6 +203,19 @@ class SnapshotEnsemble(Callback):
     @staticmethod
     def GetEfficientNetB0Model(input_tensor, INPUT_SHAPE=(135, 135, 3), bTrainConvolutionBase=False):
         
+        '''
+        Purpose:
+            Construct a efficientnet-b0 model to implement snapshot ensemble.
+
+        Parameters:
+            1. input_tensor: tensor for the model input.
+            2. bTrainConvolutionBase: flag to toggle the layer.trainable property. 
+                                      Default is 'False'.
+
+        Returns:
+            model - the model instance.
+        '''
+        
         conv_base = EfficientNetB0(input_tensor=input_tensor, weights="imagenet", include_top=False)
 
         if bTrainConvolutionBase == False:
@@ -197,6 +234,18 @@ class SnapshotEnsemble(Callback):
     
     @staticmethod
     def Load_Ensembled_Model(snapshot_dir, input_size = (135, 135, 3)):
+        
+        '''
+        Purpose:
+            Combine the individual snapshots to create the ensembled model.
+
+        Parameters:
+            1. snapshot_dir: the directory where the snapshots are located.
+            2. input_size: the input size for the ensembled model. Default is (135, 135, 3).
+
+        Returns:
+            ensembled_model - the ensembled model instance.
+        '''
     
         print('\nEnsembling Snapshot Models\n')
         print('Loading Snapshots...')
@@ -235,52 +284,3 @@ class SnapshotEnsemble(Callback):
         print('\n')
         return ensembled_model
     
-    @staticmethod
-    def get_inception_module(layer_in, f1, f2_in, f2_out, f3_in, f3_out, f4_out):
-        
-        # 1x1 conv
-        conv1 = Conv2D(f1, (1,1), padding='same', activation='relu')(layer_in)
-
-        # 3x3 conv
-        conv3 = Conv2D(f2_in, (1,1), padding='same', activation='relu')(layer_in)
-        conv3 = Conv2D(f2_out, (3,3), padding='same', activation='relu')(conv3)
-
-        # 5x5 conv
-        conv5 = Conv2D(f3_in, (1,1), padding='same', activation='relu')(layer_in)
-        conv5 = Conv2D(f3_out, (5,5), padding='same', activation='relu')(conv5)
-
-        # 3x3 max pooling
-        pool = MaxPooling2D((3,3), strides=(1,1), padding='same')(layer_in)
-        pool = Conv2D(f4_out, (1,1), padding='same', activation='relu')(pool)
-
-        # concatenate filters, assumes filters/channels last
-        layer_out = concatenate([conv1, conv3, conv5, pool], axis=-1)
-        return layer_out
-    
-    @staticmethod
-    def Build_malaria_Inception_Network(input_tensor):
-        
-        # define model input
-        # visible = input_tensor #Input(shape = INPUT_SHAPE)
-        
-        # add inception block 1
-        layer = SnapshotEnsemble.get_inception_module(input_tensor, 64, 96, 128, 16, 32, 32)
-        
-        # add inception block 1
-        layer = SnapshotEnsemble.get_inception_module(layer, 128, 128, 192, 32, 96, 32)
-
-        gap = GlobalAveragePooling2D(data_format='channels_last')(layer)
-        dense = Dense(1024, activation='relu')(gap)
-        dropout = Dropout(0.5)(dense)
-        out  = Dense(1, activation='sigmoid')(dropout)
-
-        # create model
-        model = Model(inputs=input_tensor, outputs=out, name='malaria_inception_network')
-        
-        model.compile(optimizer='adam',
-                      loss='binary_crossentropy',
-                      metrics=['accuracy'])
-        
-        # summarize model
-        # print(model.summary())
-        return model

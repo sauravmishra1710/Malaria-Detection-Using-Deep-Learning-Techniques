@@ -6,6 +6,7 @@ import numpy as np
 from DataUtility import RBC_CELL_TYPE
 
 class CustomDataGenerator():
+    
     '''
     Generate batches of tensor image data with basic image pre-processing. 
     This helps in generting and feeding the images to the model batch-wise 
