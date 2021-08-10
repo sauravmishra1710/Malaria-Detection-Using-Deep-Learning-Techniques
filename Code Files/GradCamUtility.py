@@ -1,18 +1,3 @@
-'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-DESCRIPTION: Grad-CAM class activation visualization.
-             A Utility/Helper class that contains helper methods for visualizing the class level activations of 
-             a Convolotional Neural Network. Grad-CAM visualizations help us know which regions, patterns of 
-             the image the neural network is looking at, and activating the region around those patterns. To 
-             visualize the activation maps, we would need the output of the LAST CONVOLUTIONAL LAYERS
-             and the final CLASSIFICATION LAYERS.
-             
-REFERENCE:   (François Chollet, 2020)
-             François Chollet, (2020) Grad-CAM class activation visualization. 
-             [online] Available at: https://keras.io/examples/vision/grad_cam/ [Accessed 20 Jun. 2020].
-
-WEBSITE:     https://keras.io/examples/vision/grad_cam/
-'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-
 # Import Libraries
 import tensorflow as tf
 from tensorflow import keras
@@ -27,22 +12,39 @@ import matplotlib.cm as cm
 class GradCamUtils():
 
     def __init__(self):
+        
+        '''
+        DESCRIPTION: Grad-CAM class activation visualization.
+                     A Utility/Helper class that contains helper methods for visualizing the class level activations of 
+                     a Convolotional Neural Network. Grad-CAM visualizations help us know which regions, patterns of 
+                     the image the neural network is looking at, and activating the region around those patterns. To 
+                     visualize the activation maps, we would need the output of the LAST CONVOLUTIONAL LAYERS
+                     and the final CLASSIFICATION LAYERS.
+
+        REFERENCE:   (François Chollet, 2020)
+                     François Chollet, (2020) Grad-CAM class activation visualization. 
+                     [online] Available at: https://keras.io/examples/vision/grad_cam/ [Accessed 20 Jun. 2020].
+
+        WEBSITE:     https://keras.io/examples/vision/grad_cam/
+        '''
         pass
 
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-    Purpose: 
-        Function to extract the image array.
 
-    Parameters:
-        1. img_path - the path of the image for which the array is required.
-        2. size - the preferred size of the image to be read.
-
-    Return Value: 
-        img_array - The array representation (in terms of the batch - 
-                    (1, size_x, size_y, channel)) of the image.
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
     def GetImageArrayInBatch(self, img_path, size):
+        
+        '''
+        Purpose: 
+            Function to extract the image array.
+
+        Parameters:
+            1. img_path - the path of the image for which the array is required.
+            2. size - the preferred size of the image to be read.
+
+        Return Value: 
+            img_array - The array representation (in terms of the batch - 
+                        (1, size_x, size_y, channel)) of the image.
+        '''
 
         img = keras.preprocessing.image.load_img(img_path, target_size=size)
 
@@ -54,25 +56,27 @@ class GradCamUtils():
         img_array = np.expand_dims(array, axis=0)
         return img_array
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-    Purpose: 
-        Get the class level activations heatmap for the CNN network. The activation maps help us 
-        identify & localize the regions, patterns of the image the neural network looks at, and 
-        activates the region around the patterns. To visualize the activation maps, this function 
-        works on the output of the LAST CONVOLUTIONAL LAYER and the final CLASSIFICATION LAYERS.
 
-    Parameters:
-        1. img_array - the array representation of the image for which the activation maps are to be 
-                       visualized.
-        2. model - the CNN model whose activations are to be analyzed.
-        3. last_conv_layer_name - name of the last convolutional layer of the model.
-        4. classifier_layer_names - the final classification layers.
-
-    Return Value: 
-        heatmap - The heatmap showing the more active regions the CNN looked at in deciding the class
-                  for the image.
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
     def ComputeGradCAMHeatmap(self, img_array, model, last_conv_layer_name, classifier_layer_names):
+        
+        '''
+        Purpose: 
+            Get the class level activations heatmap for the CNN network. The activation maps help us 
+            identify & localize the regions, patterns of the image the neural network looks at, and 
+            activates the region around the patterns. To visualize the activation maps, this function 
+            works on the output of the LAST CONVOLUTIONAL LAYER and the final CLASSIFICATION LAYERS.
+
+        Parameters:
+            1. img_array - the array representation of the image for which the activation maps are to be 
+                           visualized.
+            2. model - the CNN model whose activations are to be analyzed.
+            3. last_conv_layer_name - name of the last convolutional layer of the model.
+            4. classifier_layer_names - the final classification layers.
+
+        Return Value: 
+            heatmap - The heatmap showing the more active regions the CNN looked at in deciding the class
+                      for the image.
+        '''
         
         # First, we create a model that maps the input image to the activations
         # of the last conv layer
@@ -126,37 +130,41 @@ class GradCamUtils():
         return heatmap
     
     
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-    Purpose: 
-        Display the heatmap - the class level activations.
-
-    Parameters:
-        1. heatmap - The class activation heatmap for the concerned image.
-        
-    Return Value: 
-        NONE
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     def DisplayHeatMap(self, heatmap):
+        
+        '''
+        Purpose: 
+            Display the heatmap - the class level activations.
+
+        Parameters:
+            1. heatmap - The class activation heatmap for the concerned image.
+
+        Return Value: 
+            NONE
+        '''
         # Display heatmap
         plt.matshow(heatmap)
         plt.axis('off')
         plt.show()
 
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-    Purpose: 
-        Get the super imposed or the blended version of the image comprising of the class activations
-        heatmap and the original image.
-
-    Parameters:
-        1. heatmap - The class activation heatmap for the concerned image.
-        2. img - The original image for which the activation image is being calculated.
-        
-    Return Value: 
-        superImposedImage - The blended version of the original image and the corresponding class 
-                            activation map.
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     def GetSuperImposedCAMImage(self, heatmap, img):
+        
+        '''
+        Purpose: 
+            Get the super imposed or the blended version of the image comprising of the class activations
+            heatmap and the original image.
+
+        Parameters:
+            1. heatmap - The class activation heatmap for the concerned image.
+            2. img - The original image for which the activation image is being calculated.
+
+        Return Value: 
+            superImposedImage - The blended version of the original image and the corresponding class 
+                                activation map.
+        '''
         # Rescale heatmap to a range 0-255
         heatmap = np.uint8(255 * heatmap)
 
@@ -176,19 +184,22 @@ class GradCamUtils():
         
         return superImposedImage
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-    Purpose: 
-        Display the original image and the corresponding class activation blended image.
-
-    Parameters:
-        1. image - The original image for which the activation image is being calculated.
-        2. superimposed_img - The blended version of the original image and the corresponding class 
-                              activation map. 
-        
-    Return Value: 
-        NONE
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     def DisplaySuperImposedImages(self, image, heatmap,superimposed_img):
+        
+        '''
+        Purpose: 
+            Display the original image and the corresponding class activation blended image.
+
+        Parameters:
+            1. image - The original image for which the activation image is being calculated.
+            2. superimposed_img - The blended version of the original image and the corresponding class 
+                                  activation map. 
+
+        Return Value: 
+            NONE
+        '''
+        
         fig, ax = plt.subplots(1, 3, figsize=(8, 12))
 
         ax[0].imshow(image)
