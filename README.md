@@ -1,2 +1,2 @@
-# Malaria-Detection-Using-Deep-Learning-Techniques
-Malaria Detection Using Deep Learning Techniques
+# Malaria Detection using Snapshot Ensembles
+Malaria Detection using Snapshot Ensembles
