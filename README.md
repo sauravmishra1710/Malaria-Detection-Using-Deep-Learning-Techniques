@@ -1,4 +1,5 @@
 # Malaria Parasite Detection using Efficient Neural Ensembles
+[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/malaria-parasite-detection-using-efficient/medical-image-classification-on-malaria)](https://paperswithcode.com/sota/medical-image-classification-on-malaria?p=malaria-parasite-detection-using-efficient)
 
 This work is published as part of the [Journal of Electronics, Electromedical Engineering, and Medical Informatics](https://jeeemi.org/index.php/jeeemi) and can be accessed online at the [Journal Page](https://doi.org/10.35882/jeeemi.v3i3.2). Please [cite](#citeAs) the work if you find these codes useful for your research. 
 
