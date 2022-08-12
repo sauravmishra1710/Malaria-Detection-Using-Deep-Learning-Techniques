@@ -57,5 +57,9 @@ Five different combinations of the snapshots were tested to create the ensembled
 
 - GradCAM experiment shows where exactly a model looks in the  image to arrive at a decision. We see the model correctly activates the region around the parasite in the parasitized cells and utilizes it to differentiate from the unparasitized cells. Such visuals make the models more transparent, explainable, and trustworthy which are very muchnessential for deploying AI based models in the healthcare network.
 
+## Papers With Code
+
+Link: https://paperswithcode.com/paper/malaria-parasite-detection-using-efficient
+
 <h2 id="citeAs">CITE AS</h2>
 Mishra, S. 2021. Malaria Parasite Detection using Efficient Neural Ensembles. Journal of Electronics, Electromedical Engineering, and Medical Informatics. 3, 3 (Oct. 2021), 119-133. DOI:https://doi.org/10.35882/jeeemi.v3i3.2.
