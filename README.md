@@ -63,5 +63,8 @@ Five different combinations of the snapshots were tested to create the ensembled
 
 Link: https://paperswithcode.com/paper/malaria-parasite-detection-using-efficient
 
-<h2 id="citeAs">CITE AS</h2>
+<h2 id="citeAs">HOW TO CITE</h2>
+
+If you find this work helpful for your study, please cite the paper as follows -</br>
+
 Mishra, S. 2021. Malaria Parasite Detection using Efficient Neural Ensembles. Journal of Electronics, Electromedical Engineering, and Medical Informatics. 3, 3 (Oct. 2021), 119-133. DOI:https://doi.org/10.35882/jeeemi.v3i3.2.
